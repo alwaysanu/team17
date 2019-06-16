@@ -3470,7 +3470,7 @@
             -o-transform: rotate( 29deg ) skew( -35deg );
             -webkit-transform: rotate( 29deg ) skew( -35deg );
             width: 20px;
-            
+
         }
 
     .me {
@@ -3526,14 +3526,15 @@
     }
 #SavedItems {
 	background-color: darkslategray;
-	
-	
+
+
 }
 .SavedItem {
 	text-align: center;
 	margin: 10px;
 	border: grey solid 1px;
-	background: rgba(0,0,0,0.2);
+	background: rgba(0,0,0,0.7);
+    box-shadow: 10px 10px 10px;
 }
 	.SavedItem:hover {
 		box-shadow: 3px 3px 3px;
@@ -3561,7 +3562,7 @@
 	}
 	.SavedItem .selected {
 		color: gold;
-		
+
 	}
 .w3-modal-content {
 	min-height: 400px;
@@ -3597,4 +3598,56 @@
 .container{
 	padding-top:40px;
 	padding-bottom:40px;
+}
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.4) }
+  20% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }

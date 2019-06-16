@@ -20,60 +20,103 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="{% static 'scripts/cookie.js' %}">
+    </script>
+
     <script>
     $("document").ready(function () {
-            var search = [{
-                "desc": "Friends Video",
-                "link": "https://www.youtube.com/watch?v=eAM_LX440T0",
-                "linkName": "Phoebe",
-                "imgLink": "https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UY268_CR0,0,182,268_AL_.jpg"
-            },
-            {
-                "desc": "Riddles",
-                "link": "https://www.riddles.com/jokes-and-riddles", "linkName": "Riddles",
-                "imgLink": ""
-            },
-            {
-                "desc": "Mr.Bean",
-                "link": "https://www.youtube.com/watch?v=XR7QK9vR6wQ", "linkName": "Mr.Bean",
-                "imgLink": ""
-                },
-                {
-                    "desc": "Friends Video",
-                    "link": "https://www.youtube.com/watch?v=eAM_LX440T0",
-                    "linkName": "Phoebe",
-                    "imgLink": "https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UY268_CR0,0,182,268_AL_.jpg"
-                },
-                {
-                    "desc": "Riddles",
-                    "link": "https://www.riddles.com/jokes-and-riddles", "linkName": "Riddles",
-                    "imgLink": ""
-                },
-                {
-                    "desc": "Mr.Bean",
-                    "link": "https://www.youtube.com/watch?v=XR7QK9vR6wQ", "linkName": "Mr.Bean",
-                    "imgLink": ""
-                }
-            ]
+            var search = "";
+            var email= getCookie("username");
+            $.ajax({
+                url:"/graphql",
+                contentType: "application/json", type: "POST",
+                data: JSON.stringify({
+                    query: `{
+                        newActivities(email:"${email}"){
+                                    title
+                                    thumb
+                                    description
+                                    link
+                                    id
+                                    category
+                                    name
+                                    participants
+                                    key
+                                }
 
-            var arrayLength = search.length;
-            var temp;
-            var str = "";
-            for (i = 0; i < arrayLength; i++) {
-                str += '<div class="col-sm-3 "> <div class="SavedItem"><div class="row"><img src="' + search[i].imgLink + '" onerror="setDefaultImage(this)" ' +
-                    'style="height:150px;width:150px; margin:3px" /></div><hr /><div class="row"><div class="col-md-8"><p><a href="' + search[i].link +
-                    '">' + search[i].linkName + '</a></p><p><div style="color: #fff">' + search[i].desc + '</div> </p></div><div class="col-md-2" style="padding-top:5%;"><span class="fa fa-save" title="Save for Later"></div></div></div></div> '
-            }
-        $("#MainDiv").html(str);
-        $(".fa-save").click(function () {
-            if ($(this).hasClass("selected")) {
-                $(this).removeClass("selected");
-            }
-            else {
-                $(this).addClass("selected");
+                    }`
+                }),
+                beforeSend: function(){
+                        $('.loader').show();
+                    },
+                    complete: function(){
+                        $('.loader').hide();
+                    },
+                success: function(result){
+                    console.log(JSON.stringify(result));
+                    search=result.data.newActivities;
+                    var arrayLength = search.length;
+                    var temp;
+                    var str = "";
+                    for (i = 0; i < arrayLength; i++) {
+                        str += '<div class="col-sm-3 "> <div class="SavedItem"><div class="row"><img src="' + search[i].thumb + '" onerror="setDefaultImage(this)" ' +
+                            'style="height:150px;width:150px; margin:3px" /></div><hr /><div class="row"><div class="col-md-8"><p><a href="' + search[i].link +
+                            '" style="color: lightsteelblue; font-size: 14px" title="'+search[i].title+'" target="_blank">' + search[i].title.substring(0,25) + '...</a></p></div><div class="col-md-2"><span id="save'+search[i].id+'" class="fa fa-save" title="Save for Later"></div></div></div>'
+                            +'<div id="'+search[i].id+'data" style="display:none">'
+                            +'<span class="titleField">'+search[i].title+'</span>'
+                            +'<span class="linkField">'+search[i].link+'</span>'
+                            +'<span class="idField">'+search[i].id+'</span>'
+                            +'<span class="catField">'+search[i].category+'</span>'
+                            +'<span class="partField">'+search[i].participants+'</span>'
+                            +'<span class="nameField">'+search[i].name+'</span>'
+                            +'<span class="keyField">'+search[i].key+'</span>'
+                            +'<span class="thumbField">'+search[i].thumb+'</span>'
+                            +'<span class="descField">'+search[i].description+'</span>'
+                            +'</div></div> '
+                    }
+                    $("#MainDiv").html(str);
+                }
+            });
+            $(document).on('click','.fa-save',function(){
+
+        var id=$(this).attr('id');
+        id = id.substring(4);
+        var email= getCookie("username");
+        var title=$("#"+id+"data>.titleField").html();
+        var cat=$("#"+id+"data>.catField").html();
+        var part=$("#"+id+"data>.partField").html();
+        var name=$("#"+id+"data>.nameField").html();
+        var key=$("#"+id+"data>.keyField").html();
+        var thumb=$("#"+id+"data>.thumbField").html();
+        var desc=$("#"+id+"data>.descField").html();
+        var link=$("#"+id+"data>.linkField").html();
+        var partNo = parseInt(part,10);
+        $.ajax({
+            url:"/graphql",
+            contentType: "application/json", type: "POST",
+            data: JSON.stringify({
+                query: `{
+                    saveRequest(email:"${email}",thumb:"${thumb}",title:"${title}",desc:"${desc}",link:"${link}"category:"${cat}",name:"${name}",participants:${partNo},key:"${key}"){
+                        username
+                    }
+
+                }`
+            }),
+            success: function(result){
+                console.log(JSON.stringify(result));
             }
         });
-        });
+        if ($(this).hasClass("selected")) {
+            $(this).removeClass("selected");
+
+        }
+        else {
+            $(this).addClass("selected");
+        }
+    });
+            });
+
+
         function setDefaultImage(id){
             if (id.src != "{%static 'img/Google.png' %}") id.src = "{%static 'img/Google.png' %}";
         }
@@ -81,49 +124,41 @@
 </head>
 
 <body>
+
     <header class="header-basic">
         <div class="header-limiter">
             <h1><a href="#">Bored<span>Bat</span></a></h1>
             <nav>
-                <a href="HomePage.html">Home</a>
-                <a href="SavedItems.html">Saved Items</a>
-                <a href="#"  class="selected">Suggest Activity</a>
+
+                <a href="{% url 'index' %}">Home</a>
+                <a href="#" class="selected">Suggested Activity</a>
+                <a href="{% url 'saved_list' %}">Saved Items</a>
 
             </nav>
         </div>
     </header>
     <div id="SavedItems">
         <div id="MainDiv" class="container" style="min-height:400px">
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                            <p>
-                                <div id="description"></div>
-                            </p>
-                        </div>
-                    </div>
-                </div>
 
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
             </div>
-
 
 
         </div>
     </div>
     <footer class="footer-distributed">
         <div class="footer-left">
-            <h3>Bat<span>Bored</span></h3>
+            <h3>Bored<span>Bat</span></h3>
             <p class="footer-links">
-                <a href="HomePage.html">Home</a>
-                <a href="SavedItems.html">Saved Items</a>
+                <a href="{% url 'index' %}">Home</a>
+
+                <a href="{% url 'saved_list' %}">Saved Items</a>
+
             </p>
 
             <p class="footer-company-name">Bat Bored &copy; 2019</p>

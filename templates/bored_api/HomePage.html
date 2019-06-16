@@ -63,6 +63,47 @@
                 }
 
             });
+            $("#likeBtn").click(function(){
+                var user = getCookie("username");
+                var type = $("#activityType").html();
+                $.ajax({
+                    url:"/graphql",
+                    contentType: "application/json", type: "POST",
+                    async: false,
+                    data: JSON.stringify({
+                        query: `{
+                            like(email:"${user}", category:"${type}"){
+                                    categoryWeights
+                                }
+                        }`
+                    }),
+                    success: function(result){
+                        console.log(JSON.stringify(result))
+                        document.getElementById('id02').style.display='none'
+                    }
+                });
+            });
+            $("#closeBtn").click(function(){
+                var user1 = getCookie("username");
+                var type = $("#activityType").html();
+                $.ajax({
+                    url:"/graphql",
+                    contentType: "application/json", type: "POST",
+                    async: false,
+                    data: JSON.stringify({
+                        query: `{
+                            like(email:"${user1}", category:"dislike"){
+                                    categoryWeights
+                                }
+                        }`
+                    }),
+                    success: function(result){
+                        console.log(JSON.stringify(result))
+                        document.getElementById('id02').style.display='none'
+                    }
+                });
+            });
+
         });
     </script>
 </head>
@@ -71,6 +112,7 @@
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
+
                 <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                 <form name="email" id="EmailForm">
                     <p>Please enter your email for a more personalized experience</p>
@@ -82,12 +124,13 @@
     <div id="id02" class="w3-modal">
         <div class="w3-modal-content">
             <div class="w3-container">
-                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <span id="closeBtn" class="w3-button w3-display-topright">&times;</span>
+                <span id="activityType" style="display:none"></span>
                 <form name="email" id="EmailForm">
-                    <p>Did you Like your Recent activity.</p>
-                    <p id="Activity">Activity Name:&nbsp;<i class="fa fa-thumbs-up"></i></p>
+                    <p>Click on like icon if you enjoyed your last activity.</p>
+                    <p id="Activity">Activity Name:&nbsp;</p>
 
-                    <p><input type="button" id="EmailButton" style="margin-top:10px" class="w3-btn w3-white w3-border w3-border-blue w3-round-large" value="Enter" />
+                    <p><i id="likeBtn" class="fa fa-thumbs-up" style="font-size:50px;margin-top:15px"></i></p>
                 </form>
             </div>
         </div>
@@ -119,9 +162,9 @@
     </div>
     <footer class="footer-distributed" style="position:fixed">
         <div class="footer-left">
-            <h3>Bat<span>Bored</span></h3>
+            <h3>Bored<span>Bat</span></h3>
             <p class="footer-links">
-                <a href="SavedItems.html">Saved Items</a>
+                <a href="{% url 'saved_list' %}">Saved Items</a>
             </p>
             <p class="footer-company-name">Bat Bored &copy; 2019</p>
             <p class="footer-links">Crafted with <span class="fa fa-heart pulse2"></span> by Souratendu, Shubham, Monica and Anusha </p>

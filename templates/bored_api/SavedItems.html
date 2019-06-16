@@ -17,7 +17,47 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Cookie" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="{% static 'scripts/cookie.js' %}"></script>
+    <script type="text/javascript">
+    $("document").ready(function () {
+            var search = "";
+            var email= getCookie("username");
+            $.ajax({
+                url:"/graphql",
+                contentType: "application/json", type: "POST",
+                data: JSON.stringify({
+                    query: `{
+                        savedList(email:"souratendu@gmail.com"){
+                                title
+                                thumb
+                                link
+
+                            }
+
+                    }`
+                }),
+                success: function(result){
+                    console.log(JSON.stringify(result));
+                    search=result.data.savedList;
+                    var arrayLength = search.length;
+                    var temp;
+                    var str = "";
+                    for (i = 0; i < arrayLength; i++) {
+                        str += '<div class="col-sm-3 "> <div class="SavedItem"><div class="row"><img src="' + search[i].thumb + '" onerror="setDefaultImage(this)" ' +
+                            'style="height:150px;width:150px; margin:3px" /></div><hr /><div class="row"><div class="col-md-12"><p><a href="' + search[i].link +
+                            '" style="color: lightsteelblue; font-size: 14px" title="'+search[i].title+'" target="_blank">' + search[i].title.substring(0,25) + '...</a></p></div></div></div></div>'
+
+                    }
+                    $("#MainDiv").html(str);
+                }
+            });
+        });
+        function setDefaultImage(id){
+            if (id.src != "{%static 'img/Google.png' %}") id.src = "{%static 'img/Google.png' %}";
+        }
+    </script>
 </head>
 
 <body>
@@ -33,153 +73,16 @@
         </div>
     </header>
     <div id="SavedItems">
-        <div class="container">
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="col-sm-3 ">
-                <div class="SavedItem">
-                    <div class="row">
-                        <img src="Google.png" style="height:150px;width:150px; margin:3px" />
-                    </div>
-                    <hr />
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <p>
-                                <a href="#">Link 1</a>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
-
-
-            </div>
+    <div id="MainDiv" class="container" style="min-height:400px">
 
 
 
 
-
-
-
-
-        </div>
+    </div>
     </div>
     <footer class="footer-distributed">
         <div class="footer-left">
-            <h3>Bat<span>Bored</span></h3>
+            <h3>Bored<span>Bat</span></h3>
             <p class="footer-links">
                 <a href="{% url 'index' %}">Home</a>
                 <a href="{% url 'bored_clicked' %}">Suggest Activity</a>

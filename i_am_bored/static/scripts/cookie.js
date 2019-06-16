@@ -29,11 +29,39 @@ function checkCookie() {
 
     }
     else {
-        if (getActivity() != null) {
+        var activity=getActivity();
+        if (activity) {
+            $("#id02 #Activity").html("Activity Name:&nbsp;"+activity);
             $("#id02").show();
         }
     }
 }
 function getActivity() {
-    return null;
+    var user = getCookie("username");
+    var activity='';
+    $.ajax({
+        url:"/graphql",
+        contentType: "application/json", type: "POST",
+        async: false,
+        data: JSON.stringify({
+            query: `{
+                user(email:"${user}"){
+                    username
+                    lastActivity    {
+                        name
+                        category
+                    }
+                }
+            }`
+        }),
+        success: function(result){
+            console.log(JSON.stringify(result))
+            if(result.data.user.lastActivity!=null)
+            {
+            activity=result.data.user.lastActivity.name;
+            $("#activityType").html(result.data.user.lastActivity.category);
+            }
+        }
+    });
+    return activity;
 }

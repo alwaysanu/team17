@@ -10,5 +10,5 @@ urlpatterns = [
     path('bored_clicked', views.bored_clicked, name="bored_clicked"),
 
     # path('random_activity', views.random_activity, name="get_random_activity"),
-    path('saved_list', views.saved_list, name="get_saved_list"),
+    path('saved_list', views.saved_list, name="saved_list"),
 ]
