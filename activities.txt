@@ -1,0 +1,90 @@
+{
+  "activity": "Listen to music you haven't heard in a while",
+  "accessibility": 0.9,
+  "type": "music",
+  "participants": 1,
+  "price": 0.05,
+  "link": "",
+  "key": "4296813"
+}
+
+{
+  "activity": "Learn how the internet works",
+  "accessibility": 0.1,
+  "type": "education",
+  "participants": 1,
+  "price": 0,
+  "link": "",
+  "key": "9414706"
+}
+
+{
+  "activity": "Research a topic you're interested in",
+  "accessibility": 0.9,
+  "type": "education",
+  "participants": 1,
+  "price": 0,
+  "link": "",
+  "key": "3561421"
+}
+
+{
+  "activity": "Learn how to use an Arduino",
+  "accessibility": 0.7,
+  "type": "education",
+  "participants": 1,
+  "price": 0.1,
+  "link": "",
+  "key": "8264223"
+}
+
+
+{
+  "activity": "Find a DIY to do",
+  "accessibility": 0.3,
+  "type": "diy",
+  "participants": 1,
+  "price": 0.4,
+  "link": "",
+  "key": "4981819"
+}
+
+{
+  "activity": "Listen to your favorite album",
+  "accessibility": 0.2,
+  "type": "music",
+  "participants": 1,
+  "price": 0.08,
+  "link": "",
+  "key": "3136729"
+}
+
+{
+  "activity": "Bake pastries for you and your neighbor",
+  "accessibility": 0.3,
+  "type": "cooking",
+  "participants": 1,
+  "price": 0.4,
+  "link": "",
+  "key": "8125168"
+}
+
+{
+  "activity": "Memorize the fifty states and their capitals",
+  "accessibility": 0,
+  "type": "busywork",
+  "participants": 1,
+  "price": 0,
+  "link": "",
+  "key": "4179309"
+}
+
+{
+  "activity": "Learn Javascript",
+  "accessibility": 0.9,
+  "type": "education",
+  "participants": 1,
+  "price": 0,
+  "link": "",
+  "key": "3469378"
+}

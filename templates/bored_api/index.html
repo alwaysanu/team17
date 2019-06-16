@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div id="dialog" title="Basic dialog">
+  <p>
+    <form method="post" action="{% url 'post_login' %}">
+        {% csrf_token %}
+        <input type='email' name='email' id='email' placeholder="Email"/>
+
+        {% if form.errors %}
+                  <p class="label label-danger">
+                      Your username and password didn't match.
+                      Please try again.
+                  </p>
+          {% endif %}
+    </form>
+
+  </p>
+</div>
+
+{% endblock %}
