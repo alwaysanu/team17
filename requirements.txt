@@ -26,7 +26,7 @@ psycopg2-binary==2.7.6.1
 python-dateutil==2.8.0
 python-unibit==1.0.2
 pytz==2018.7
-PyYAML==5.1.1
+PyYAML==5.4
 relativetimebuilder==2.0.0
 requests==2.22.0
 Rx==1.6.1
