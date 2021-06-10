@@ -1,4 +1,4 @@
-Django==2.1.5
+Django==2.2.24
 Pillow==5.4.1
 psycopg2==2.7.6.1
 psycopg2-binary==2.7.6.1
@@ -7,7 +7,7 @@ aniso8601==5.1.0
 beautifulsoup4==4.7.1
 certifi==2019.3.9
 chardet==3.0.4
-Django==2.1.5
+Django==2.2.24
 fake-useragent==0.1.11
 future==0.17.1
 Google-Search-API==1.1.14
