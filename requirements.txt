@@ -16,7 +16,7 @@ graphene-django==2.3.0
 graphql-core==2.2
 graphql-relay==0.4.5
 idna==2.8
-lxml==4.3.3
+lxml==4.6.5
 multidict==4.5.2
 nltk==3.4.1
 Pillow==5.4.1
